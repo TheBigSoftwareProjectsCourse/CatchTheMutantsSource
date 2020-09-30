@@ -43,7 +43,7 @@ public class CatchMutants {
 			if (wolverineSuccess && killerSuccess) {
 				displaySuccessMessage();
 			} else {
-				System.out.println("Professor X says, \"Looks like you have more work to do\"");
+				System.out.println("\nProfessor X says, \"Looks like you have more work to do\"");
 			}
 
 		} catch (ClassNotFoundException e) {
