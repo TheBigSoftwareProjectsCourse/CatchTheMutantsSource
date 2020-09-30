@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import java.util.Arrays;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 import mutants.Mutant;
 import testthetests.MutantMaker;
@@ -23,7 +23,7 @@ public class MutantRevealer {
 
 	static Mutant mutant;
 
-	@BeforeClass
+	@BeforeAll
 	public static void getMutant() {
 		// gets the mutant we're going to try to reveal
 		mutant = MutantMaker.getNextMutant();
