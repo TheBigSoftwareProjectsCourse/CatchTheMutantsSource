@@ -18,7 +18,7 @@ import org.junit.runner.JUnitCore;
 public class CatchMutants {
 
 	public final int NUM_RANDOM_TRIALS = 25;
-	private static final String EVALUATION_PACKAGE = "testthetests";
+	private static final String TESTS_PACKAGE = "revealer";
 	private static final String TESTS_FILE = "MutantRevealer";
 	private static final String ASCII_FILE = "xmen.txt";
 
@@ -35,7 +35,7 @@ public class CatchMutants {
 	public void run() {
 		Class<?> killer;
 		try {
-			killer = Class.forName(EVALUATION_PACKAGE + "." + TESTS_FILE);
+			killer = Class.forName(TESTS_PACKAGE + "." + TESTS_FILE);
 			boolean wolverineSuccess = evaluateTestsOnGoodMutants(killer);
 			System.out.println();
 
@@ -105,6 +105,7 @@ public class CatchMutants {
 	 */
 	private void displaySuccessMessage() {
 		System.out.println("\n ~~~~~~~ Good testing!  YOU CAUGHT ALL THE BAD MUTANTS! ~~~~~~~\n");
+		System.out.println("You are truly one of the \n");
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(ASCII_FILE));
 			String line;

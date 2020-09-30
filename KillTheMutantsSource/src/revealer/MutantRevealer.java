@@ -1,4 +1,4 @@
-package testthetests;
+package revealer;
 
 import static org.junit.Assert.*;
 
@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import mutants.Mutant;
+import testthetests.MutantMaker;
 
 /**
  * Contains the test cases that will reveal the mutants. Creates a mutant that
