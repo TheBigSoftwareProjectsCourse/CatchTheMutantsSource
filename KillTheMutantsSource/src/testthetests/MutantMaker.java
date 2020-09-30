@@ -25,7 +25,7 @@ public class MutantMaker {
 			Class<?> mutantClass;
 			try {
 				mutantClass = Class.forName(MUTANT_CLASS_NAME + i);
-				mutants[i] = (Mutant) mutantClass.newInstance();
+				mutants[i] = (Mutant) mutantClass.getDeclaredConstructor().newInstance();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
