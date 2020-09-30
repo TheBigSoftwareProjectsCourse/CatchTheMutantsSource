@@ -4,18 +4,27 @@ import static org.junit.Assert.*;
 
 import java.util.Arrays;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import mutants.Mutant;
 
-public class Killer {
+/**
+ * Contains the test cases that will reveal the mutants. Creates a mutant that
+ * will be used to run the tests against.
+ * 
+ * Do NOT run this class directly.
+ * 
+ * @author Shannon Duvall original concept
+ * @author Sara Sprenkle refactoring, documentation
+ */
+public class MutantRevealer {
 
 	static Mutant mutant;
 
 	@BeforeClass
 	public static void getMutant() {
+		// gets the mutant we're going to try to reveal
 		mutant = MutantMaker.getNextMutant();
 	}
 
