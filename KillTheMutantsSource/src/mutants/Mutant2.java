@@ -27,7 +27,7 @@ public class Mutant2 implements Mutant {
 		if (words == null)
 			throw new IllegalArgumentException();
 		if (words.length < 3)
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Array input too short");
 		List<String> list = Arrays.asList(words);
 		// System.out.println(list);
 		// list.sort(Comparator.comparingInt(String::length));

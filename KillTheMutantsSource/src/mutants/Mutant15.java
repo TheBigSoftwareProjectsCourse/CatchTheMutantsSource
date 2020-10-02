@@ -24,9 +24,11 @@ public class Mutant15 implements Mutant{
 
 
 	public String thirdShortest(String[] words){
-		if(words == null) throw new IllegalArgumentException();
+		if (words == null)
+			throw new IllegalArgumentException();
 		// Here - change 3 to a 4
-		if(words.length<4) throw new IllegalArgumentException();
+		if (words.length < 4)
+			throw new IllegalArgumentException("Array input too short");
 		List<String> list = Arrays.asList(words);
 		//System.out.println(list);
 		list.sort(Comparator.comparingInt(String::length));
