@@ -38,9 +38,20 @@ public class MutantMaker {
 	 * @return the next mutant
 	 */
 	public static Mutant getNextMutant() {
-		Mutant ret = mutants[index];
+		Mutant mutant = mutants[index];
 		index = (index + 1) % mutants.length;
-		return ret;
+		return mutant;
+	}
+
+	/**
+	 *
+	 * Get the current mutant
+	 * 
+	 * @return the current mutant
+	 */
+	public static Mutant getMutant() {
+		Mutant mutant = mutants[index];
+		return mutant;
 	}
 
 	/**

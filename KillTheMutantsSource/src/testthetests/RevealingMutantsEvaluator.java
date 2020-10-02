@@ -4,27 +4,39 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 
-import org.junit.runner.JUnitCore;
+import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
+
+import org.junit.platform.launcher.Launcher;
+import org.junit.platform.launcher.LauncherDiscoveryRequest;
+import org.junit.platform.launcher.core.LauncherFactory;
+import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
+import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
+import org.junit.platform.launcher.listeners.TestExecutionSummary;
 
 /**
  * Evaluates how good your tests in MutantRevealer are against good and bad
  * mutants.
  * 
+ * Since we're writing to both System.out and System.err, sometimes messages
+ * don't come out in the expected order.
+ * 
  * @author Shannon Duvall - original conception
- * @author Sara Sprenkle - documentation, updated displayed output, minor
- *         revisions
+ * @author Sara Sprenkle - revise for JUnit 5, documentation, updated displayed
+ *         output, minor revisions
  */
-public class CatchMutants {
+public class RevealingMutantsEvaluator {
 
 	public final int NUM_RANDOM_TRIALS = 25;
 	private static final String TESTS_PACKAGE = "revealer";
 	private static final String TESTS_FILE = "MutantRevealer";
-	private static final String ASCII_FILE = "xmen.txt";
+	private static final String SUCCESS_ASCII_FILE = "xmen.txt";
+	private static final String FAILURE_ASCII_FILE = "sentinel.txt";
 
 	public static void main(String[] args) {
 		MutantMaker.initMutantMaker();
-		CatchMutants kill = new CatchMutants();
+		RevealingMutantsEvaluator kill = new RevealingMutantsEvaluator();
 		kill.run();
 	}
 
@@ -33,17 +45,18 @@ public class CatchMutants {
 	 * displays the results of those tests
 	 */
 	public void run() {
-		Class<?> killer;
+		Class<?> revealer;
 		try {
-			killer = Class.forName(TESTS_PACKAGE + "." + TESTS_FILE);
-			boolean wolverineSuccess = evaluateTestsOnGoodMutants(killer);
+			revealer = Class.forName(TESTS_PACKAGE + "." + TESTS_FILE);
+			boolean wolverineSuccess = evaluateTestsOnGoodMutants(revealer);
 			System.out.println();
 
-			boolean killerSuccess = evaluateTestsOnBadMutants(killer);
-			if (wolverineSuccess && killerSuccess) {
-				displaySuccessMessage();
+			boolean mutantSuccess = evaluateTestsOnBadMutants(revealer);
+			if (wolverineSuccess && mutantSuccess) {
+				displayMessage("~~~~~~~ Good testing!  YOU CAUGHT ALL THE BAD MUTANTS! ~~~~~~~", SUCCESS_ASCII_FILE);
 			} else {
-				System.out.println("\nProfessor X says, \"Looks like you have more work to do\"");
+				displayMessage("~~~~~~~ Oh no! The Sentinel caught the mutants before you did! ~~~~~~~",
+						FAILURE_ASCII_FILE);
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -58,14 +71,25 @@ public class CatchMutants {
 	 * @return true if all the good mutant passed all tests; otherwise, false
 	 */
 	public boolean evaluateTestsOnGoodMutants(Class<?> revealerTestClass) {
-		JUnitCore junit = new JUnitCore();
+
+		final LauncherDiscoveryRequest request = setUpTestRequest(revealerTestClass);
+
+		final Launcher launcher = LauncherFactory.create();
+		final SummaryGeneratingListener listener = new SummaryGeneratingListener();
+
+		launcher.registerTestExecutionListeners(listener);
+
 		System.out.println("~~~~~~~~~~ Testing Wolverine: ~~~~~~~~~~ ");
-		// Test it lots, since there is some randomness involved when there are options
-		// for the correct answer
-		for (int i = 1; i <= NUM_RANDOM_TRIALS; i++) {
+		// Test it lots, since there is some randomness involved in Wolverine
+		// when there are options for the correct answer
+		for (int i = 0; i < NUM_RANDOM_TRIALS; i++) {
 			MutantMaker.index = 0;
-			if (!junit.run(revealerTestClass).wasSuccessful()) {
+			launcher.execute(request);
+
+			TestExecutionSummary summary = listener.getSummary();
+			if (summary.getFailures().size() > 0) {
 				System.err.println("Uh Oh.  You caught Wolverine, but he's the good mutant!");
+				displayFailedTestsResult(summary, System.err);
 				return false;
 			}
 		}
@@ -80,20 +104,33 @@ public class CatchMutants {
 	 * @return true if all the bad mutants were revealed; otherwise, false
 	 */
 	public boolean evaluateTestsOnBadMutants(Class<?> revealerTestClass) {
-		JUnitCore junit = new JUnitCore();
+		final LauncherDiscoveryRequest request = setUpTestRequest(revealerTestClass);
+
+		final Launcher launcher = LauncherFactory.create();
+		final SummaryGeneratingListener listener = new SummaryGeneratingListener();
+
+		launcher.registerTestExecutionListeners(listener);
+
 		int gotAway = 0;
 		int caught = 0;
 		MutantMaker.index = 1; // Mutant 0 is Wolverine.
+
 		System.out.println("~~~~~~~~~~ Testing the Mutants ~~~~~~~~~~");
 		for (int i = 0; i < MutantMaker.getNumMutants() - 1; i++) {
-			System.out.println("Testing Mutant: " + MutantMaker.index);
+			System.out.println("\nTesting Mutant: " + MutantMaker.index);
 			int index = MutantMaker.index;
-			if (junit.run(revealerTestClass).wasSuccessful()) {
-				System.err.println("Mutant: " + index + " made it out alive!\n");
+			launcher.execute(request);
+
+			TestExecutionSummary summary = listener.getSummary();
+			if (summary.getTestsFailedCount() == 0) {
+				System.err.println("Mutant " + index + " made it out alive!\n");
 				gotAway++;
 			} else {
-				System.out.println("Mutant: " + index + " caught!\n");
+				System.out.println("Mutant " + index + " caught with the following test cases:");
 				caught++;
+				if (summary.getFailures().size() > 0) {
+					displayFailedTestsResult(summary, System.out);
+				}
 			}
 		}
 		System.out.println("Successfully caught " + caught + " out of " + (gotAway + caught));
@@ -101,24 +138,52 @@ public class CatchMutants {
 	}
 
 	/**
-	 * Displays the message upon success
+	 * Create the request to execute the given test class
+	 * 
+	 * @param revealerTestClass - the test class to call
+	 * @return
 	 */
-	private void displaySuccessMessage() {
-		System.out.println("\n ~~~~~~~ Good testing!  YOU CAUGHT ALL THE BAD MUTANTS! ~~~~~~~\n");
-		System.out.println("You are truly one of the \n");
+	private LauncherDiscoveryRequest setUpTestRequest(Class<?> revealerTestClass) {
+		final LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
+				.selectors(selectClass(revealerTestClass)).build();
+		return request;
+	}
+
+	/**
+	 * Display the count of and which tests failed
+	 * 
+	 * @param summary - the summary of the test execution
+	 * @param out TODO
+	 */
+	private void displayFailedTestsResult(TestExecutionSummary summary, PrintStream out) {
+		out.println("Test cases failed (" + summary.getTestsFailedCount() + "): ");
+		for (TestExecutionSummary.Failure failure : summary.getFailures()) {
+			out.println(" - " + failure.getTestIdentifier().getDisplayName());
+		}
+	}
+
+	/**
+	 * Displays the message and then the contents of the files
+	 * 
+	 * @param message  the message to display
+	 * @param filename the name of the file whose contents should be displayed
+	 */
+	private void displayMessage(String message, String filename) {
+		System.out.println("\n " + message + " \n");
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(ASCII_FILE));
+			BufferedReader br = new BufferedReader(new FileReader(filename));
 			String line;
 			while ((line = br.readLine()) != null) {
 				System.out.println(line);
 			}
 			br.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("Couldn't read in ascii art file " + ASCII_FILE);
+			System.err.println("Couldn't read in ascii art file " + filename);
 			e.printStackTrace();
 		} catch (IOException e) {
-			System.err.println("Error reading ascii art file " + ASCII_FILE);
+			System.err.println("Error reading ascii art file " + filename);
 			e.printStackTrace();
 		}
 	}
+
 }

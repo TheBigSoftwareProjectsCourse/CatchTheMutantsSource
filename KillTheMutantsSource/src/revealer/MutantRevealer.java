@@ -1,11 +1,13 @@
 package revealer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import mutants.Mutant;
 import testthetests.MutantMaker;
@@ -42,29 +44,40 @@ public class MutantRevealer {
 				|| mutant.thirdShortest(tests[4]).equals("bca"));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testExceptionNull() {
-		mutant.thirdShortest(null);
+		assertThrows(IllegalArgumentException.class, () -> {
+			mutant.thirdShortest(null);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testExceptionEmpty() {
-		mutant.thirdShortest(new String[] {});
+		assertThrows(IllegalArgumentException.class, () -> {
+			mutant.thirdShortest(new String[] {});
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testExceptionLength1() {
-		mutant.thirdShortest(new String[] { "hey" });
+		assertThrows(IllegalArgumentException.class, () -> {
+			mutant.thirdShortest(new String[] { "hey" });
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testExceptionLength2() {
-		mutant.thirdShortest(new String[] { "hey", "there" });
+		assertThrows(IllegalArgumentException.class, () -> {
+			mutant.thirdShortest(new String[] { "hey", "there" });
+		});
+		
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testExceptionNoThird() {
-		mutant.thirdShortest(new String[] { "cba", "abc", "bca" });
+		assertThrows(IllegalArgumentException.class, () -> {
+			mutant.thirdShortest(new String[] { "cba", "abc", "bca" });
+		});
 	}
 
 	@Test
