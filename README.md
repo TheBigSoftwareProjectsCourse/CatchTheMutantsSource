@@ -1,4 +1,4 @@
-# KillTheMutantsSource
+# CatchTheMutantsSource
 
 This is the parent directory.  To get the code for Eclipse, select the CatchTheMutantsSource directory, right-click and choose "Import Projects..."
 
