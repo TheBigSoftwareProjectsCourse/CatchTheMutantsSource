@@ -19,7 +19,7 @@ import testthetests.MutantMaker;
  * Do NOT run this class directly.
  * 
  * @author Shannon Duvall original concept
- * @author Sara Sprenkle refactoring, documentation
+ * @author Sara Sprenkle refactoring, documentation, updated for JUnit 5
  */
 public class MutantRevealer {
 
@@ -109,5 +109,5 @@ public class MutantRevealer {
 		assertTrue(result.equals("bye") || result.equals("and"));
 
 	}
-
+	
 }
