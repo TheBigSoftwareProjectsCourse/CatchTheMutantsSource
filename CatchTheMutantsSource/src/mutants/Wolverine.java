@@ -17,11 +17,12 @@ public class Wolverine implements Mutant {
 	/**
 	 * Returns the third shortest String in the array
 	 * 
-	 * If there IS NO THIRD SHORTEST in the array or if the array is null, the code
+	 * If there are fewer than 3 words in the array or if the array is null, the method
 	 * should throw an IllegalArgumentException.
 	 * If there is a tie for the third shortest, any of the tied strings is valid.
 	 * If there is a tie for shortest or second shortest, the duplicates do not
-	 * affect the calculation of the third shortest. 
+	 * affect the calculation of the third shortest.
+	 * If there is no third shortest word, then the method returns null.
 	 * The original array should not be altered.
 	 *  
 	 * Examples:
@@ -31,8 +32,8 @@ public class Wolverine implements Mutant {
 	 *    thirdShortest(["a"]) should throw an IllegalArgumentException
 	 * 
 	 * @param words an array of Strings
-	 * @return a String giving the third shortest String from the array
-	 * @throws IllegalArgumentException if array is null or if there is no third shortest
+	 * @return a String giving the third shortest String from the array if it exists; otherwise, returns null
+	 * @throws IllegalArgumentException if array is null or if there are fewer than 3 words in the array
 	 */
 	public String thirdShortest(String[] words) {
 		if (words == null)
@@ -40,9 +41,7 @@ public class Wolverine implements Mutant {
 		if (words.length < 3)
 			throw new IllegalArgumentException("Array input too short");
 		List<String> list = Arrays.asList(words);
-		// System.out.println(list);
 		list.sort(Comparator.comparingInt(String::length));
-		// System.out.println(list);
 		List<String> noDuplicates = new ArrayList<String>(list);
 		String last = null;
 		for (String word : list) {
@@ -55,7 +54,7 @@ public class Wolverine implements Mutant {
 			}
 		}
 		if (noDuplicates.size() < 3)
-			throw new IllegalArgumentException("Array does not have third shortest.");
+			return null;
 		String ideal = noDuplicates.get(2);
 		List<String> answers = new ArrayList<String>();
 		for (String s : list) {

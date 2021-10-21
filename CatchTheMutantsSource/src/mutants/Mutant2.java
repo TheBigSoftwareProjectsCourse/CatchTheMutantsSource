@@ -6,22 +6,28 @@ import java.util.List;
 
 public class Mutant2 implements Mutant {
 
-	// -------- PROBLEM 1: Third shortest
-	// input: strands, an array of Strings
-	// output: a String giving the third shortest String from the array
-	// method: return the String in the array that is the
-	// third shortest.
-	// Return the string "invalid" if there IS NO THIRD SHORTEST in the array or if
-	// the array is null.
-	// If there is a tie for the third shortest, any of the tied strings is valid.
-	// If there is a tie for shortest or second shortest, the duplicates do not
-	// affect the calculation of the third shortest.
-	// The original array should not be altered.
-	// Examples:
-	// thirdShortest(["a", "ab", "and"]) = "a"
-	// thirdShortest(["a", "b", "bc", "ab", "bye", "and"]) = "a" or "b"
-	// thirdShortest(["a"]) = "invalid"
-
+	/**
+	 * Returns the third shortest String in the array
+	 * 
+	 * If there are fewer than 3 words in the array or if the array is null, the
+	 * method should throw an IllegalArgumentException. If there is a tie for the
+	 * third shortest, any of the tied strings is valid. If there is a tie for
+	 * shortest or second shortest, the duplicates do not affect the calculation of
+	 * the third shortest. If there is no third shortest word, then the method
+	 * returns null. The original array should not be altered.
+	 * 
+	 * Examples: thirdShortest(["a", "ab", "abc"]) returns "abc" thirdShortest(["a",
+	 * "b", "bc", "ab", "bye", "and"]) returns "bye" or "and" because “a” and “b”
+	 * are the shortest, “ab” and “bc” are the second shortest, and “bye” and “and”
+	 * are the third shortest. thirdShortest(["a"]) should throw an
+	 * IllegalArgumentException
+	 * 
+	 * @param words an array of Strings
+	 * @return a String giving the third shortest String from the array if it
+	 *         exists; otherwise, returns null
+	 * @throws IllegalArgumentException if array is null or if there are fewer than
+	 *                                  3 words in the array
+	 */
 	// Doesn't sort based on length, just returns third non-duplicate
 	public String thirdShortest(String[] words) {
 		if (words == null)
@@ -44,7 +50,7 @@ public class Mutant2 implements Mutant {
 			}
 		}
 		if (noDuplicates.size() < 3)
-			throw new IllegalArgumentException();
+			return null;
 		return noDuplicates.get(2);
 	}
 
