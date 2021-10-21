@@ -1,8 +1,8 @@
 package revealer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 
@@ -23,6 +23,7 @@ import testthetests.MutantMaker;
  */
 public class MutantRevealer {
 
+	// In typical JUnit tests, this would be a non-static variable.
 	static Mutant mutant;
 
 	@BeforeAll
@@ -70,14 +71,12 @@ public class MutantRevealer {
 		assertThrows(IllegalArgumentException.class, () -> {
 			mutant.thirdShortest(new String[] { "hey", "there" });
 		});
-		
+
 	}
 
 	@Test
-	public void testExceptionNoThird() {
-		assertThrows(IllegalArgumentException.class, () -> {
-			mutant.thirdShortest(new String[] { "cba", "abc", "bca" });
-		});
+	public void testNoThird() {
+		assertEquals(null, mutant.thirdShortest(new String[] { "cba", "abc", "bca" }));
 	}
 
 	@Test
@@ -109,5 +108,5 @@ public class MutantRevealer {
 		assertTrue(result.equals("bye") || result.equals("and"));
 
 	}
-	
+
 }
