@@ -23,7 +23,7 @@ import org.junit.platform.launcher.listeners.TestExecutionSummary;
  * don't come out in the expected order.
  * 
  * @author Shannon Duvall - original conception
- * @author Sara Sprenkle - revise for JUnit 5, documentation, updated displayed
+ * @author Sara Sprenkle - revised for JUnit 5, documentation, updated displayed
  *         output, minor revisions
  */
 public class RevealingMutantsEvaluator {
