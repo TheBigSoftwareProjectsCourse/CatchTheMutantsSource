@@ -9,7 +9,7 @@ import java.util.List;
  * Mutant1
  *
  */
-public class Mutant1 implements Mutant{
+public class Mutant1 implements Mutant {
 	/**
 	 * Returns the third shortest String in the array
 	 * 
@@ -33,28 +33,28 @@ public class Mutant1 implements Mutant{
 	 *                                  3 words in the array
 	 */
 
-	// Line commented - some "invalid" scenarios not caught
-		public String thirdShortest(String[] words){
-			if (words == null)
-				throw new IllegalArgumentException();
-			if (words.length < 3)
-				throw new IllegalArgumentException("Array input too short");
-			List<String> list = Arrays.asList(words);
-			
-			list.sort(Comparator.comparingInt(String::length));
-			//System.out.println(list);
-			List<String> noDuplicates = new ArrayList<String>(list);
-			String last = null;
-			for(String word: list){
-				if(last == null) last = word;
-				else if(word.length()==last.length()){
-						noDuplicates.remove(word);
-				}
-				else{
-					last = word;
-				}
+	// Line commented - if there is no 3rd shortest
+	public String thirdShortest(String[] words) {
+		if (words == null)
+			throw new IllegalArgumentException();
+		if (words.length < 3)
+			throw new IllegalArgumentException("Array input too short");
+		List<String> list = Arrays.asList(words);
+
+		list.sort(Comparator.comparingInt(String::length));
+		// System.out.println(list);
+		List<String> noDuplicates = new ArrayList<String>(list);
+		String last = null;
+		for (String word : list) {
+			if (last == null)
+				last = word;
+			else if (word.length() == last.length()) {
+				noDuplicates.remove(word);
+			} else {
+				last = word;
 			}
-			// if(noDuplicates.size()<3) return null;
-			return noDuplicates.get(2);	
 		}
+		// if(noDuplicates.size()<3) return null;
+		return noDuplicates.get(2);
+	}
 }
