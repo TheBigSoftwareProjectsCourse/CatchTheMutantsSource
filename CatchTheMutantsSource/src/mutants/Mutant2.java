@@ -153,20 +153,4 @@ public class Mutant2 implements Mutant {
 	// return 0;
 	// }
 
-	/*
-	 * public static void main(String[] args){ YourWork myMethods = new YourWork();
-	 * //String[] words = {"hello", "is", "it", "me", "you're", "looking", "for"};
-	 * //System.out.println(myMethods.secondLongest(words)); //char[] dna = {'C',
-	 * 'A', 'A', 'F'}; //System.out.println(myMethods.validDNA(dna, 1)); //int[]
-	 * nums = {-3,4,5,6,7}; //System.out.println(myMethods.sequenceThree(nums));
-	 * //char[] myQuiz = {'B',' ','A'}; //char[] answerKey = {'B','B','C'};
-	 * //System.out.println(myMethods.score(myQuiz, answerKey)); //int[] poker =
-	 * {1,5,12,13,14,15,16}; //System.out.println(myMethods.findStraights(poker));
-	 * //System.out.println(myMethods.biggestStraight(poker));
-	 * 
-	 * }
-	 * 
-	 * }
-	 */
-
 }
