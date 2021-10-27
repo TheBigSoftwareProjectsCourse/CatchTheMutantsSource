@@ -36,8 +36,8 @@ public class RevealingMutantsEvaluator {
 
 	public static void main(String[] args) {
 		MutantMaker.initMutantMaker();
-		RevealingMutantsEvaluator kill = new RevealingMutantsEvaluator();
-		kill.run();
+		RevealingMutantsEvaluator evaluator = new RevealingMutantsEvaluator();
+		evaluator.run();
 	}
 
 	/**
