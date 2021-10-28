@@ -1,6 +1,8 @@
 package revealer;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -33,16 +35,10 @@ public class MutantRevealer {
 	}
 
 	@Test
-	public void testMutant() {
-		String[][] tests = { { "a", "ab", "abc" }, { "1", "12", "12345", "12345345", "234oi34iuwer" }, {},
-				{ "cba", "abc", "bca" }, { "cba", "abc", "bca", "a", "a", "a", "ab", "ab", "ab" } };
-		// assertEquals(mutant.thirdShortest(null),"invalid");
-		assertEquals(mutant.thirdShortest(tests[0]), "abc");
-		assertEquals(mutant.thirdShortest(tests[1]), "12345");
-		// assertEquals(mutant.thirdShortest(tests[2]),"invalid");
-		// assertEquals(mutant.thirdShortest(tests[3]),"invalid");
-		assert (mutant.thirdShortest(tests[4]).equals("cba") || mutant.thirdShortest(tests[4]).equals("abc")
-				|| mutant.thirdShortest(tests[4]).equals("bca"));
+	public void testTypicalBehavior() {
+		String[][] tests = { { "a", "ab", "abc" }, { "1", "12", "12345", "12345345", "234oi34iuwer" }};
+		assertEquals("abc", mutant.thirdShortest(tests[0]));
+		assertEquals("12345", mutant.thirdShortest(tests[1]));
 	}
 
 	@Test
@@ -75,8 +71,8 @@ public class MutantRevealer {
 	}
 
 	@Test
-	public void testNoThird() {
-		assertEquals(null, mutant.thirdShortest(new String[] { "cba", "abc", "bca" }));
+	public void testNoThirdShortest() {
+		assertNull(mutant.thirdShortest(new String[] { "cba", "abc", "bca" }));
 	}
 
 	@Test
@@ -97,6 +93,9 @@ public class MutantRevealer {
 		String[] original = { "abcds", "b", "bc", "ab", "bye", "and" };
 		String result = mutant.thirdShortest(words);
 		assertTrue(result.equals("bye") || result.equals("and"));
+		
+		// make sure the array hasn't changed
+		assertArrayEquals(original, words);
 
 	}
 
@@ -106,7 +105,6 @@ public class MutantRevealer {
 		String[] original = { "a", "b", "bc", "ab", "bye", "and" };
 		String result = mutant.thirdShortest(words);
 		assertTrue(result.equals("bye") || result.equals("and"));
-
 	}
 
 }
