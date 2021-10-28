@@ -33,8 +33,8 @@ public class Mutant9 implements Mutant {
 			throw new IllegalArgumentException();
 		if (words.length < 3)
 			throw new IllegalArgumentException("Array input too short");
-		List<String> list = Arrays.asList(words);
-		// System.out.println(list);
+		String[] wordsCopy = Arrays.copyOf(words, words.length);
+		List<String> list = Arrays.asList(wordsCopy);
 		list.sort(Comparator.comparingInt(String::length));
 		// System.out.println(list);
 		List<String> noDuplicates = new ArrayList<String>(list);
