@@ -6,9 +6,11 @@ This is the parent directory.  To get the code for Eclipse, select the CatchTheM
 
 You'll need to create a jar file of your mutants that should be included with their project.
 
-From the command line, go to the bin directory and run: `jar cf mutants.jar mutants/*.class` or `jar cf mutants.jar mutants`
+From the command line, go to the bin directory and run: `jar cf mutants.jar mutants/*.class` or `jar cf mutants.jar mutants`.  Can also make it from Eclipse's Export menu.
 
 Copy mutants.jar into the project's lib directory
+
+In 2022, Students had issues with the default version of Eclipse -- which is 17 -- and the jar file I gave them (which was 18.)
 
 ## Mutants
 
