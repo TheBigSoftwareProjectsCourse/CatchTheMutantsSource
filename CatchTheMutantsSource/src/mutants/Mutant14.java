@@ -53,13 +53,12 @@ public class Mutant14 implements Mutant {
 		if (noDuplicates.size() < 3)
 			return null;
 		String ideal = noDuplicates.get(2);
-		List<String> answers = new ArrayList<String>();
-		for (String s : list) {
-			if (s.length() == ideal.length()) {
-				answers.add(s);
-			}
-		}
 		return ideal;
+	}
+
+	@Override
+	public String getBugDescription() {
+		return "Doesn't handle duplicates in the array";
 	}
 
 }

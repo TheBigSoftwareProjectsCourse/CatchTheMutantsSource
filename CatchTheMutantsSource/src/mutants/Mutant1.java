@@ -58,8 +58,15 @@ public class Mutant1 implements Mutant {
 		return noDuplicates.get(2);
 	}
 	
+	
 	public static void main(String args[]) {
 		Mutant mutant = new Mutant1();
 		System.out.println(mutant.thirdShortest(new String[] { "cba", "abc", "bca" }));
+	}
+
+
+	@Override
+	public String getBugDescription() {
+		return "Does not return null if no third shortest";
 	}
 }

@@ -57,4 +57,9 @@ public class Mutant11 implements Mutant {
 		return noDuplicates.get(3);
 	}
 
+	@Override
+	public String getBugDescription() {
+		return "Original array is altered";
+	}
+
 }

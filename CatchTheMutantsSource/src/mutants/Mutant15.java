@@ -63,4 +63,9 @@ public class Mutant15 implements Mutant {
 		int index = (int) (Math.random() * answers.size());
 		return answers.get(index);
 	}
+
+	@Override
+	public String getBugDescription() {
+		return "Throws IllegalArgumentException if there are fewer than 4 words (instead of 3)";
+	}
 }

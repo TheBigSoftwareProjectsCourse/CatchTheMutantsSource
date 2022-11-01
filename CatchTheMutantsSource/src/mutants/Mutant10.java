@@ -57,4 +57,9 @@ public class Mutant10 implements Mutant {
 		return noDuplicates.get(2);
 	}
 
+	@Override
+	public String getBugDescription() {
+		return "Returns a String \"invalid\" if the array parameter is null";
+	}
+
 }

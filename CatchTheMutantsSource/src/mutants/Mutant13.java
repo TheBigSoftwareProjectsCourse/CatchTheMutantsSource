@@ -65,4 +65,9 @@ public class Mutant13 implements Mutant {
 		return ideal;
 	}
 
+	@Override
+	public String getBugDescription() {
+		return "Throws IllegalArgumentException almost always";
+	}
+
 }
