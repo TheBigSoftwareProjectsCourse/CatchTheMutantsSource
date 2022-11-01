@@ -54,7 +54,7 @@ public class Mutant11 implements Mutant {
 			return null;
 		// Here - alter original array
 		words[0] = "oops";
-		return noDuplicates.get(3);
+		return noDuplicates.get(2);
 	}
 
 	@Override
