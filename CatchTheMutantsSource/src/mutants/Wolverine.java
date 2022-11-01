@@ -194,4 +194,9 @@ public class Wolverine implements Mutant {
 		System.out.println(actual);
 	}
 
+	@Override
+	public String getBugDescription() {
+		return "Not a mutant!";
+	}
+
 }

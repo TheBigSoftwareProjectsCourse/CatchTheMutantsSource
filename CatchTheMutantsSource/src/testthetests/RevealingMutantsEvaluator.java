@@ -29,6 +29,7 @@ import org.junit.platform.launcher.listeners.TestExecutionSummary;
 public class RevealingMutantsEvaluator {
 
 	public final int NUM_RANDOM_TRIALS = 25;
+	public final boolean DEBUG = true;
 	private static final String TESTS_PACKAGE = "revealer";
 	private static final String TESTS_FILE = "MutantRevealer";
 	private static final String SUCCESS_ASCII_FILE = "xmen.txt";
@@ -118,6 +119,9 @@ public class RevealingMutantsEvaluator {
 		System.out.println("~~~~~~~~~~ Testing the Mutants ~~~~~~~~~~");
 		for (int i = 0; i < MutantMaker.getNumMutants() - 1; i++) {
 			System.out.println("\nTesting Mutant: " + MutantMaker.index);
+			if( DEBUG ) {
+				System.out.println("\t --> Mutant " + MutantMaker.getMutant().getBugDescription());
+			}
 			int index = MutantMaker.index;
 			launcher.execute(request);
 
@@ -158,7 +162,7 @@ public class RevealingMutantsEvaluator {
 	private void displayFailedTestsResult(TestExecutionSummary summary, PrintStream out) {
 		out.println("Test cases failed (" + summary.getTestsFailedCount() + "): ");
 		for (TestExecutionSummary.Failure failure : summary.getFailures()) {
-			out.println(" - " + failure.getTestIdentifier().getDisplayName());
+			out.print(" - " + failure.getTestIdentifier().getDisplayName() + " because " + failure.getException() );
 		}
 	}
 

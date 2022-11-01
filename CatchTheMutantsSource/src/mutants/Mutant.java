@@ -29,4 +29,6 @@ public interface Mutant {
 	 * @throws IllegalArgumentException if array is null or if there are fewer than 3 words in the array
 	 */
 	public String thirdShortest(String[] words);
+	
+	public String getBugDescription();
 }
