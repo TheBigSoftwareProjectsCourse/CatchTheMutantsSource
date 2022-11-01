@@ -54,7 +54,12 @@ public class Mutant12 implements Mutant {
 			return null;
 		// Here alter original array
 		words = null;
-		return noDuplicates.get(3);
+		return noDuplicates.get(2);
+	}
+
+	@Override
+	public String getBugDescription() {
+		return "Original array is null";
 	}
 
 }
