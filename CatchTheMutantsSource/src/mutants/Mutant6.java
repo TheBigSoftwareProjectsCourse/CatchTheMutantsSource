@@ -57,4 +57,9 @@ public class Mutant6 implements Mutant {
 		return noDuplicates.get(2);
 	}
 
+	@Override
+	public String getBugDescription() {
+		return "reverses the sorted list (from largest to smallest)";
+	}
+
 }

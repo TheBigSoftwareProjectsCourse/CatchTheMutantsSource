@@ -54,4 +54,9 @@ public class Mutant4 implements Mutant {
 		return noDuplicates.get(2);
 	}
 
+	@Override
+	public String getBugDescription() {
+		return "Does not throw IllegalArgumentException for words parameter being null";
+	}
+
 }

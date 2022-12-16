@@ -55,4 +55,9 @@ public class Mutant3 implements Mutant {
 		return noDuplicates.get(2);
 	}
 
+	@Override
+	public String getBugDescription() {
+		return "Changing operation from < to >= when looking at duplicates";
+	}
+
 }

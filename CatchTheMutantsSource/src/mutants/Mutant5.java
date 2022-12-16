@@ -54,4 +54,9 @@ public class Mutant5 implements Mutant {
 		return noDuplicates.get(2);
 	}
 
+	@Override
+	public String getBugDescription() {
+		return "does not throw IllegalArgumentException when array is too short";
+	}
+
 }
