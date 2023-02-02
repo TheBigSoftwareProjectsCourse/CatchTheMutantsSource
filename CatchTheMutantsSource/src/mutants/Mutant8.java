@@ -54,4 +54,9 @@ public class Mutant8 implements Mutant {
 		return noDuplicates.get(1);
 	}
 
+	@Override
+	public String getBugDescription() {
+		return "Returns the 2nd shortest, not the third";
+	}
+
 }

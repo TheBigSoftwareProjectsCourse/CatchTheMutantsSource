@@ -49,4 +49,9 @@ public class Mutant7 implements Mutant {
 		return noDuplicates.get(2);
 	}
 
+	@Override
+	public String getBugDescription() {
+		return "Does not handle duplicates in the array of words";
+	}
+
 }
