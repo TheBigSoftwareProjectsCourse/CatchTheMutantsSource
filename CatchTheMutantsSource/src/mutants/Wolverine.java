@@ -189,7 +189,7 @@ public class Wolverine implements Mutant {
 		Mutant mutant = new Wolverine();
 
 		String[] words = { "abcds", "b", "bc", "ab", "bye", "and" };
-		String[] original = { "abcds", "b", "bc", "ab", "bye", "and" };
+		//String[] original = { "abcds", "b", "bc", "ab", "bye", "and" };
 		String actual = mutant.thirdShortest(words);
 		System.out.println(actual);
 	}
