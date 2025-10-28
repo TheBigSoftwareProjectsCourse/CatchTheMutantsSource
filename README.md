@@ -10,7 +10,7 @@ From the command line, go to the bin directory and run: `jar cf mutants.jar muta
 
 Copy mutants.jar into the project's lib directory
 
-In 2022, Students had issues with the default version of Eclipse --
+In 2022, Students had issues with the default version of Java in Eclipse --
 which is 17 -- and the jar file I gave them (which was 18.)
 
 ## Mutants

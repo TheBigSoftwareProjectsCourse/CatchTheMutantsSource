@@ -2,8 +2,12 @@ package mutants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Correct implementation of the method thirdShortest
@@ -38,19 +42,49 @@ public class Wolverine implements Mutant {
 	 *                                  3 words in the array
 	 */
 	public String thirdShortest(String[] words) {
-		if (words == null)
+		
+		if (words == null) {
 			throw new IllegalArgumentException();
-		if (words.length < 3)
+		}
+		if (words.length < 3) {
 			throw new IllegalArgumentException("Array input too short");
-		String[] wordsCopy = Arrays.copyOf(words, words.length);
-		List<String> list = Arrays.asList(wordsCopy);
-		list.sort(Comparator.comparingInt(String::length));
-		List<String> noDuplicates = new ArrayList<String>(list);
-		String last = null;
-		for (String word : list) {
-			if (last == null)
-				last = word;
-			else if (word.length() == last.length()) {
+		}
+		
+		Map<Integer, List<String>> lengthToSize = new HashMap<>();
+		
+		for( String word: words) {
+			int wordLength = word.length();
+			if( ! lengthToSize.containsKey(wordLength)) {
+				lengthToSize.put(wordLength, new ArrayList<String>());
+			} 	
+			lengthToSize.get(wordLength).add(word);
+		}
+		
+		Set<Integer> keys = lengthToSize.keySet();
+				
+		if( keys.size() < 3 ) {
+			return null;
+		}
+		
+		
+		Object[] keyArray = keys.toArray();
+		Arrays.sort(keyArray);
+		
+		
+		int thirdLongest = (int) keyArray[2];
+		
+		List<String> options = lengthToSize.get(thirdLongest);
+		Collections.shuffle(options); // get one of the options
+		return options.get(0);
+		
+/*		
+
+		String last = wordList.get(0);
+		// go through the list, checking if more than one word has the same length.  
+		// if one words has the same length as another word, remove it.
+		for (int i=1; i < wordList.size(); i++) {
+			String word = wordList.get(i);
+			if (word.length() == last.length()) {
 				noDuplicates.remove(word);
 			} else {
 				last = word;
@@ -60,13 +94,14 @@ public class Wolverine implements Mutant {
 			return null;
 		String ideal = noDuplicates.get(2);
 		List<String> answers = new ArrayList<String>();
-		for (String s : list) {
+		for (String s : wordList) {
 			if (s.length() == ideal.length()) {
 				answers.add(s);
 			}
 		}
 		int index = (int) (Math.random() * answers.size());
 		return answers.get(index);
+		*/
 	}
 
 	// -------- PROBLEM 2: Valid DNA

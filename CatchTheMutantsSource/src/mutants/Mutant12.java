@@ -1,11 +1,11 @@
 package mutants;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
 
 public class Mutant12 implements Mutant {
+	
+	private Wolverine wolverine = new Wolverine();
+
 
 	/**
 	 * Returns the third shortest String in the array
@@ -30,36 +30,27 @@ public class Mutant12 implements Mutant {
 	 *                                  3 words in the array
 	 */
 	public String thirdShortest(String[] words) {
-		if (words == null)
-			throw new IllegalArgumentException();
-		if (words.length < 3)
-			throw new IllegalArgumentException("Array input too short");
-		String[] wordsCopy = Arrays.copyOf(words, words.length);
-		List<String> list = Arrays.asList(wordsCopy);
-		// System.out.println(list);
-		list.sort(Comparator.comparingInt(String::length));
-		// System.out.println(list);
-		List<String> noDuplicates = new ArrayList<String>(list);
-		String last = null;
-		for (String word : list) {
-			if (last == null)
-				last = word;
-			else if (word.length() < last.length()) {
-				noDuplicates.remove(word);
-			} else {
-				last = word;
-			}
-		}
-		if (noDuplicates.size() < 3)
-			return null;
-		// Here alter original array
-		words = null;
-		return noDuplicates.get(2);
+		String thirdShortest = wolverine.thirdShortest(words);
+		Arrays.sort(words);
+		return thirdShortest;
 	}
 
 	@Override
 	public String getBugDescription() {
-		return "Original array is null";
+		return "Original array is sorted, alphabetically";
+	}
+	
+	public static void main(String[] args) {
+		String[] words = {"bc", "a", "def"};
+		Mutant12 mutant = new Mutant12();
+		System.out.println("Third shortest: " + mutant.thirdShortest(words));
+		System.out.println("words:");
+		for(int i=0; i < words.length; i++ ) {
+			System.out.println(words[i]);
+		}
+		
+		String[] words2 = { "a", "ab", "ab", "ab" };
+		System.out.println("Third shortest: " + mutant.thirdShortest(words2));
 	}
 
 }

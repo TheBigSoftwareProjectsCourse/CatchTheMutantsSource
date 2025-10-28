@@ -37,7 +37,6 @@ public class Mutant7 implements Mutant {
 		String[] wordsCopy = Arrays.copyOf(words, words.length);
 		List<String> list = Arrays.asList(wordsCopy);
 		list.sort(Comparator.comparingInt(String::length));
-		// System.out.println(list);
 		List<String> noDuplicates = new ArrayList<String>(list);
 		/*
 		 * String last = null; for(String word: list){ if(last == null) last = word;

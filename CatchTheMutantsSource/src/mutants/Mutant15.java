@@ -1,11 +1,8 @@
 package mutants;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-
 public class Mutant15 implements Mutant {
+
+	private Wolverine wolverine = new Wolverine();
 
 	/**
 	 * Returns the third shortest String in the array
@@ -36,32 +33,9 @@ public class Mutant15 implements Mutant {
 		// Here - change 3 to a 4
 		if (words.length < 4)
 			throw new IllegalArgumentException("Array input too short");
-		String[] wordsCopy = Arrays.copyOf(words, words.length);
-		List<String> list = Arrays.asList(wordsCopy);
-		list.sort(Comparator.comparingInt(String::length));
-		// System.out.println(list);
-		List<String> noDuplicates = new ArrayList<String>(list);
-		String last = null;
-		for (String word : list) {
-			if (last == null)
-				last = word;
-			else if (word.length() == last.length()) {
-				noDuplicates.remove(word);
-			} else {
-				last = word;
-			}
-		}
-		if (noDuplicates.size() < 3)
-			return null;
-		String ideal = noDuplicates.get(2);
-		List<String> answers = new ArrayList<String>();
-		for (String s : list) {
-			if (s.length() == ideal.length()) {
-				answers.add(s);
-			}
-		}
-		int index = (int) (Math.random() * answers.size());
-		return answers.get(index);
+		
+		return wolverine.thirdShortest(words);
+
 	}
 
 	@Override

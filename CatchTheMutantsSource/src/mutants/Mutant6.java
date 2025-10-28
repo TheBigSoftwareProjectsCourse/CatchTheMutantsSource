@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Mutant6 implements Mutant {
 
@@ -31,30 +34,41 @@ public class Mutant6 implements Mutant {
 	 *                                  3 words in the array
 	 */
 	public String thirdShortest(String[] words) {
-		if (words == null)
+		if (words == null) {
 			throw new IllegalArgumentException();
-		if (words.length < 3)
-			throw new IllegalArgumentException("Array input too short");
-		String[] wordsCopy = Arrays.copyOf(words, words.length);
-		List<String> list = Arrays.asList(wordsCopy);
-		list.sort(Comparator.comparingInt(String::length));
-		// Here
-		Collections.reverse(list);
-		// System.out.println(list);
-		List<String> noDuplicates = new ArrayList<String>(list);
-		String last = null;
-		for (String word : list) {
-			if (last == null)
-				last = word;
-			else if (word.length() < last.length()) {
-				noDuplicates.remove(word);
-			} else {
-				last = word;
-			}
 		}
-		if (noDuplicates.size() < 3)
+		if (words.length < 3) {
+			throw new IllegalArgumentException("Array input too short");
+		}
+		
+		Map<Integer, List<String>> lengthToSize = new HashMap<>();
+		
+		for( String word: words) {
+			int wordLength = word.length();
+			if( ! lengthToSize.containsKey(wordLength)) {
+				lengthToSize.put(wordLength, new ArrayList<String>());
+			} 	
+			lengthToSize.get(wordLength).add(word);
+		}
+		
+		Set<Integer> keys = lengthToSize.keySet();
+				
+		if( keys.size() < 3 ) {
 			return null;
-		return noDuplicates.get(2);
+		}
+		
+		
+		Object[] keyArray = keys.toArray();
+		Arrays.sort(keyArray);
+		
+		// get the third from the back...  
+		int index = keyArray.length-3;
+		
+		int thirdLongest = (int) keyArray[index];
+		
+		List<String> options = lengthToSize.get(thirdLongest);
+		Collections.shuffle(options); // get one of the options
+		return options.get(0);
 	}
 
 	@Override
