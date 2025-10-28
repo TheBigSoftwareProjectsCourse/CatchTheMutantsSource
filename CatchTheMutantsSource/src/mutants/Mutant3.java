@@ -60,4 +60,16 @@ public class Mutant3 implements Mutant {
 		return "Changing operation from < to >= when looking at duplicates";
 	}
 
+	public static void main(String[] args) {
+		Mutant3 mutant = new Mutant3();
+		String[] words = { "aaa", "1234", "a", "b", "bc", "cd", "str", "uvx" };
+		// will likely print out null because the process deletes more words than it
+		// should.
+		System.out.println(mutant.thirdShortest(words));
+
+		Wolverine wolverine = new Wolverine();
+		System.out.println(wolverine.thirdShortest(words));
+
+	}
+
 }
