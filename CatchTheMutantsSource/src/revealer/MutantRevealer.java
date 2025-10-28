@@ -18,6 +18,8 @@ import testthetests.MutantMaker;
  * Contains the test cases that will reveal the mutants. Creates a mutant that
  * will be used to run the tests against.
  * 
+ * DO NOT DISTRIBUTE THIS VERSION TO STUDENTS
+ * 
  * Do NOT run this class directly.
  * 
  * @author Shannon Duvall original concept
@@ -98,7 +100,7 @@ public class MutantRevealer {
 		assertArrayEquals(original, words);
 
 	}
-
+	
 	@Test
 	public void testMoreInArray2() {
 		String[] words = { "a", "b", "bc", "ab", "bye", "and" };
